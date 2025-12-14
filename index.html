@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Futsal Card Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 968px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    h1 {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 2.5em;
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #555;
+      font-size: 0.95em;
+    }
+
+    input, select {
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    input[type="number"] {
+      max-width: 150px;
+    }
+
+    button {
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .preview-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    #preview {
+      width: 100%;
+      max-width: 500px;
+      border: 3px solid #e0e0e0;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    #preview.show {
+      display: block;
+    }
+
+    .placeholder {
+      width: 100%;
+      max-width: 500px;
+      aspect-ratio: 1;
+      background: #f5f5f5;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 1.2em;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .download-btn {
+      display: none;
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+
+    .download-btn.show {
+      display: block;
+    }
+
+    .loading {
+      color: #667eea;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚽ Futsal Card Generator</h1>
+    
+    <div class="form-section">
+      <form id="cardForm">
+        <div class="form-group">
+          <label for="photo">Player Photo *</label>
+          <input type="file" id="photo" accept="image/*" required>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Player Name *</label>
+          <input type="text" id="name" placeholder="e.g., MESSI" required>
+        </div>
+
+        <div class="form-group">
+          <label for="tier">Card Tier *</label>
+          <select id="tier" required>
+            <option value="">Select tier...</option>
+            <option value="bronze">Bronze</option>
+            <option value="silver">Silver</option>
+            <option value="gold">Gold</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="position">Position *</label>
+          <input type="text" id="position" placeholder="e.g., ST, CAM, GK" maxlength="3" required>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country *</label>
+          <select id="country" required>
+            <option value="">Select country...</option>
+          </select>
+        </div>
+
+        <div class="stats-row">
+          <div class="form-group">
+            <label for="overall">Overall *</label>
+            <input type="number" id="overall" min="1" max="99" placeholder="95" required>
+          </div>
+
+          <div class="form-group">
+            <label for="skill">Skill *</label>
+            <input type="number" id="skill" min="1" max="99" placeholder="92" required>
+          </div>
+
+          <div class="form-group">
+            <label for="manner">Manner *</label>
+            <input type="number" id="manner" min="1" max="99" placeholder="88" required>
+          </div>
+        </div>
+
+        <button type="submit" id="generateBtn">Generate Card</button>
+      </form>
+    </div>
+
+    <div class="preview-section">
+      <canvas id="preview" width="1024" height="1024"></canvas>
+      <div class="placeholder" id="placeholder">
+        Your generated card will appear here
+      </div>
+      <div class="loading" id="loading" style="display: none;">
+        Generating your card...
+      </div>
+      <button class="download-btn" id="downloadBtn">Download Card</button>
+    </div>
+  </div>
+
+  <script src="client-generator.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 node_modules/
 uploads/
 output/
-*.png
+uploads/*.png
+output/*.png
 .env

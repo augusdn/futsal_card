@@ -1,0 +1,20 @@
+{
+  "name": "futsal-card-generator",
+  "version": "1.0.0",
+  "description": "FUT-style player card generator MVP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "setup": "node generateTemplates.js"
+  },
+  "keywords": ["futsal", "card", "generator"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "@napi-rs/canvas": "^0.1.62",
+    "sharp": "^0.33.1"
+  }
+}
